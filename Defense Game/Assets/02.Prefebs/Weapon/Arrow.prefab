@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &840589551220210443
+--- !u!1 &2183939071096028260
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6246800045400328220}
-  - component: {fileID: 141295019504476868}
-  - component: {fileID: 597829501085333566}
-  - component: {fileID: 6438649592474281308}
-  - component: {fileID: 2270883277341672631}
+  - component: {fileID: 5013070413145779471}
+  - component: {fileID: 1224070692601179880}
+  - component: {fileID: 156815047728961502}
   m_Layer: 0
-  m_Name: Archer
-  m_TagString: Unit
+  m_Name: Arrow
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6246800045400328220
+--- !u!4 &5013070413145779471
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840589551220210443}
+  m_GameObject: {fileID: 2183939071096028260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.09, y: 7.76, z: 0}
+  m_LocalPosition: {x: -0.75, y: 7.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &141295019504476868
+--- !u!212 &1224070692601179880
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840589551220210443}
+  m_GameObject: {fileID: 2183939071096028260}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,70 +80,28 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7257567913506708742, guid: 2a0fcb2f11a4d496d9d10417bc8e1ab1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c272e6d3dde6e4ad58af98df64cbaf46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &597829501085333566
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840589551220210443}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fd7ad56c1d637a440960869da24cb4e0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6438649592474281308
+--- !u!114 &156815047728961502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840589551220210443}
+  m_GameObject: {fileID: 2183939071096028260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b887ae66cd355324a877ec9e125502c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 121eb3ce14cbe7a4d9ef45b3c56da753, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitBase
-  attackRange: 4
-  attackDelay: 1
-  damage: 1
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!114 &2270883277341672631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840589551220210443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1ffdc7125d26e2418661f20ddfabff5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttack
-  arrowPrefab: {fileID: 2183939071096028260, guid: e447f6ee646be524293a4ed9e6b19336, type: 3}
-  firePoint: {fileID: 6246800045400328220}
-  animator: {fileID: 597829501085333566}
+  m_EditorClassIdentifier: Assembly-CSharp::Arrow
+  speed: 8

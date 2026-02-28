@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9004148122923463584}
   - component: {fileID: 9004148122923463615}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9004148123338886052}
   - component: {fileID: 9004148123338886051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9004148123409344355}
   - component: {fileID: 9004148123409344354}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9004148123724671368}
   - component: {fileID: 9004148123724671367}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,8 @@ GameObject:
   - component: {fileID: 3123773668918704367}
   - component: {fileID: 2698363800553330481}
   - component: {fileID: 7979798537215746735}
-  m_Layer: 0
+  - component: {fileID: -4498525246232817671}
+  m_Layer: 6
   m_Name: Emeny01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmenyControler
   wayPoints: []
+  hp: 10
 --- !u!114 &7979798537215746735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,5 +451,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f8bc73eb03f6a4e8b824da52460771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmenyMovement
-  moveSpeed: 3
+  moveSpeed: 1
   moveDirection: {x: 0, y: 0, z: 0}
+--- !u!70 &-4498525246232817671
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9004148124358793283}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.30905914, y: -0.00000023841858}
+  m_Size: {x: 1.1181183, y: 1.6217704}
+  m_Direction: 0
