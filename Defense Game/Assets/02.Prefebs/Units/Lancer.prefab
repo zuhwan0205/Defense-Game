@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6479698932945541551}
   - component: {fileID: 3698076408309162880}
   - component: {fileID: 5785603397639652133}
+  - component: {fileID: 752431439958807532}
+  - component: {fileID: 7307003618066177374}
   m_Layer: 0
   m_Name: Lancer
   m_TagString: Unit
@@ -114,3 +116,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &752431439958807532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4650491063369803780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b887ae66cd355324a877ec9e125502c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnitBase
+  attackRange: 2
+  attackDelay: 1
+  damage: 20
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &7307003618066177374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4650491063369803780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f46124422a55134d9d1850606cc4ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeAreaAttack
+  animator: {fileID: 5785603397639652133}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  boxSize: {x: 2.34, y: 0.6}
+  forwardOffset: 0.8

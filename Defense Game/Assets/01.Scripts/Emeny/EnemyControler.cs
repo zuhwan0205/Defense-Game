@@ -8,6 +8,7 @@ public class EnemyControler : MonoBehaviour
     [SerializeField] private Transform[] wayPoints;          // 이동 경로 정보
     private int currentIndex = 0;   // 현재 목표지점 인덱스
     private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
+    [SerializeField] private int hp = 0;
 
     public void Setup(Transform[] wayPoints)
     {
@@ -58,6 +59,16 @@ public class EnemyControler : MonoBehaviour
         }
         
         else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }
