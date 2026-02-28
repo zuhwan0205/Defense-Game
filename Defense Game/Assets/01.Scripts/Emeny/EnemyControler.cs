@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmenyControler : MonoBehaviour
+public class EnemyControler : MonoBehaviour
 {
     private int wayPointCount;      // 이동 경로 개수
     [SerializeField] private Transform[] wayPoints;          // 이동 경로 정보
     private int currentIndex = 0;   // 현재 목표지점 인덱스
-    private EmenyMovement  emenyMovement;         // 오브젝트 이동 제어
+    private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
 
     public void Setup(Transform[] wayPoints)
     {
-        emenyMovement = GetComponent<EmenyMovement>();
+        enemyMovement = GetComponent<EnemyMovement>();
 
         // 적 이동 경로 wayPoint 정보 저장
         wayPointCount = wayPoints.Length;
@@ -34,7 +34,7 @@ public class EmenyControler : MonoBehaviour
 
         while(true)
         {
-            if(Vector3.Distance(transform.position,wayPoints[currentIndex].position)<0.02f * emenyMovement.MoveSpeed)
+            if(Vector3.Distance(transform.position,wayPoints[currentIndex].position)<0.02f * enemyMovement.MoveSpeed)
             {
                 NextMoveTo();
             }
@@ -54,7 +54,7 @@ public class EmenyControler : MonoBehaviour
             
             currentIndex++;
             Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
-            emenyMovement.MoveTo(direction);
+            enemyMovement.MoveTo(direction);
         }
         
         else

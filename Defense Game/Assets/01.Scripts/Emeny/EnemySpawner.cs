@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EmenySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
@@ -25,7 +25,7 @@ public class EmenySpawner : MonoBehaviour
         while(true)
         {
             GameObject clone = Instantiate(enemyPrefab);
-            EmenyControler enemy = clone.GetComponent<EmenyControler>();
+            EnemyControler enemy = clone.GetComponent<EnemyControler>();
 
             enemy.Setup(myPoints);
 
