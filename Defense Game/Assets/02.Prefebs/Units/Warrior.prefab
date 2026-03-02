@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6210128764781790476}
   - component: {fileID: 7980019540715885461}
   - component: {fileID: 3082410131206482545}
+  - component: {fileID: 2582663802529348504}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Unit
@@ -128,8 +129,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitBase
   attackRange: 1.5
-  attackDelay: 1
-  damage: 1
+  attackDelay: 2.2
+  damage: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2582663802529348504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071951372447939455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7cee9d7af30eb4086f67ecadcb816d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeSingleAttack
+  animator: {fileID: 7980019540715885461}

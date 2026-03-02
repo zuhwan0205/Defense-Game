@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3607562207591263602}
   - component: {fileID: 6658635884336495598}
   - component: {fileID: 5881088873188402739}
+  - component: {fileID: 1171132435755222675}
   m_Layer: 0
   m_Name: Pawn_Hammer
   m_TagString: Untagged
@@ -127,9 +128,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b887ae66cd355324a877ec9e125502c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitBase
-  attackRange: 3
+  attackRange: 1.5
   attackDelay: 1
   damage: 1
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &1171132435755222675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2268303091075519028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7cee9d7af30eb4086f67ecadcb816d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeSingleAttack
+  animator: {fileID: 6658635884336495598}
