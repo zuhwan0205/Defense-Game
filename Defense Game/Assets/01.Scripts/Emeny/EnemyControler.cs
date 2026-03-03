@@ -7,13 +7,11 @@ public class EnemyControler : MonoBehaviour
     private int wayPointCount;      // 이동 경로 개수
     [SerializeField] private Transform[] wayPoints;          // 이동 경로 정보
     private int currentIndex = 0;   // 현재 목표지점 인덱스
-    private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
-    [SerializeField] private int hp = 0;
+    [SerializeField] private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
+    [SerializeField] private int hp = 10;
 
     public void Setup(Transform[] wayPoints)
     {
-        enemyMovement = GetComponent<EnemyMovement>();
-
         // 적 이동 경로 wayPoint 정보 저장
         wayPointCount = wayPoints.Length;
         this.wayPoints = new Transform[wayPointCount];
@@ -48,20 +46,15 @@ public class EnemyControler : MonoBehaviour
     /// </summary>
     private void NextMoveTo()
     {
-        if(currentIndex < wayPointCount - 1)
-        {
-            transform.position = wayPoints[currentIndex].position;
-            Debug.Log(transform.position);
-            
-            currentIndex++;
-            Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
-            enemyMovement.MoveTo(direction);
-        }
-        
-        else
-        {
-            Destroy(gameObject);
-        }
+        // 현재 목표 지점에 정확히 맞춤
+        transform.position = wayPoints[currentIndex].position;
+
+        // 다음 인덱스로 이동 (마지막이면 다시 0)
+        currentIndex = (currentIndex + 1) % wayPointCount;
+
+        // 다음 목표 방향 계산
+        Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
+        enemyMovement.MoveTo(direction);
     }
     
     public void TakeDamage(int damage)
