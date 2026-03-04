@@ -26,7 +26,6 @@ public class EnemyControler : MonoBehaviour
     /// <summary>
     /// 적 이동/목표지점 설정 코루틴
     /// </summary>
-    /// <returns></returns>
     private IEnumerator OnMove()
     {
         NextMoveTo();
@@ -46,11 +45,20 @@ public class EnemyControler : MonoBehaviour
     /// </summary>
     private void NextMoveTo()
     {
+        //이전 웨이포인트 인덱스 기억
+        int prevIndex = currentIndex;
+        
         // 현재 목표 지점에 정확히 맞춤
         transform.position = wayPoints[currentIndex].position;
 
         // 다음 인덱스로 이동 (마지막이면 다시 0)
         currentIndex = (currentIndex + 1) % wayPointCount;
+        
+        bool lookLeft = (prevIndex == 2 && currentIndex == 3) || (prevIndex == 3 && currentIndex == 0);
+
+        transform.localScale = lookLeft
+            ? new Vector3(1f, 1f, 1f)
+            : new Vector3(-1f, 1f, 1f);
 
         // 다음 목표 방향 계산
         Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
