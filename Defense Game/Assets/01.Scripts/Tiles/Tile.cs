@@ -1,12 +1,64 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    // 타일에 타워가 건설되어 있는지 검사하는 변수
-        public bool IsUnitSpawned { set; get; }
-    
-        private void Awake()
+    [SerializeField] private TileManager tileManager;
+
+    public bool IsUnitSpawned => CurrentUnit != null;
+    public GameObject CurrentUnit { get; private set; }
+
+    public void SetUnit(GameObject unit)
+    {
+        CurrentUnit = unit;
+
+        if (CurrentUnit != null)
         {
-            IsUnitSpawned = false;
+            CurrentUnit.transform.SetParent(transform, false);
+            CurrentUnit.transform.localPosition = Vector3.zero;
         }
+    }
+    
+    public void OnDrag(PointerEventData eventData){ }
+
+    public void ClearUnit()
+    {
+        CurrentUnit = null;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (!IsUnitSpawned) return;
+        tileManager.StartDragging(this);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Tile targetTile = GetTileUnderPointer(eventData);
+
+        if (targetTile != null)
+            tileManager.TryDrop(targetTile);
+        else
+            tileManager.EndDragging();
+    }
+
+    private Tile GetTileUnderPointer(PointerEventData eventData)
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = eventData.position;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (var result in results)
+        {
+            Tile tile = result.gameObject.GetComponent<Tile>();
+            if (tile != null)
+                return tile;
+        }
+
+        return null;
+    }
 }
