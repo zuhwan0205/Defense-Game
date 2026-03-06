@@ -3,10 +3,16 @@ using TMPro;
 
 public class IngameUI : MonoBehaviour
 {
-    [Header("Round UI")]
+    [Header("라운드 UI")]
     [SerializeField] private RoundManager roundManager;
     [SerializeField] private TextMeshProUGUI roundText;
     [SerializeField] private TextMeshProUGUI timeText;
+    
+    [Header("골드 UI")]
+    [SerializeField] private GoldManager goldManager;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI summonCostText;
+
 
     public void OnClickSummon()
     {
@@ -20,6 +26,12 @@ public class IngameUI : MonoBehaviour
             roundManager.OnRoundStarted += RoundStarted;
             roundManager.OnGameEnded += GameEnded;
         }
+        
+        if (goldManager != null)
+        {
+            goldManager.OnSummonCostChanged += SummonCostChanged;
+            goldManager.OnGoldChanged += OnGoldChanged;
+        }
 
         RefreshUI(); // 처음 1번 갱신
     }
@@ -30,6 +42,12 @@ public class IngameUI : MonoBehaviour
         {
             roundManager.OnRoundStarted -= RoundStarted;
             roundManager.OnGameEnded -= GameEnded;
+        }
+        
+        if (goldManager != null)
+        {
+            goldManager.OnSummonCostChanged -= SummonCostChanged;
+            goldManager.OnGoldChanged -= OnGoldChanged;
         }
     }
 
@@ -49,6 +67,9 @@ public class IngameUI : MonoBehaviour
         // Game Over 패널 띄우기 같은 거 여기서 처리
         RefreshUI();
     }
+    
+    private void SummonCostChanged(int cost) => RefreshSummonCost();
+    private void OnGoldChanged(int gold) => RefreshGold();
 
     private void RefreshUI()
     {
@@ -58,6 +79,8 @@ public class IngameUI : MonoBehaviour
             roundText.text = $"Round {roundManager.CurrentRound}/30";
 
         RefreshTime();
+        RefreshGold();
+        RefreshSummonCost();
     }
 
     private void RefreshTime()
@@ -71,5 +94,18 @@ public class IngameUI : MonoBehaviour
         int ss = sec % 60;
 
         timeText.text = $"{mm:00}:{ss:00}";
+    }
+    
+    private void RefreshGold()
+    {
+        if (goldManager == null || goldText == null) return;
+        goldText.text = $" Gold: {goldManager.CurrentGold}";
+    }
+    
+    private void RefreshSummonCost()
+    {
+        if (goldManager == null || summonCostText == null) return;
+
+        summonCostText.text = $" Cost: {goldManager.CurrentSummonCost}";
     }
 }

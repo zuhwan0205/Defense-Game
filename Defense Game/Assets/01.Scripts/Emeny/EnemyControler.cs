@@ -71,8 +71,15 @@ public class EnemyControler : MonoBehaviour
 
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+        GoldManager.Instance.AddGold(1);
+        //사망 애니메이션이나 이펙트 추가해야함
     }
 }
 

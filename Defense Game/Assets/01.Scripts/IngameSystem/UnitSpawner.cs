@@ -19,21 +19,29 @@ public class UnitSpawner : MonoBehaviour
 
     public void SpawnUnit()
     {
-        Tile emptyTile = FindFirstEmptyTile();
+        Tile emptyTile = FindTile();
+        
+        //소환시 골드 확인
+        if(!GoldManager.Instance.TrySpend())
+        {
+            Debug.Log("골드 부족!");
+            return;
+        }
+        
         if (emptyTile == null)
         {
             Debug.Log("빈 타일이 없습니다.");
             return;
         }
 
-        GameObject selectedPrefab = GetRandomUnitPrefab();
+        GameObject selectedPrefab = GetUnit();
         if (selectedPrefab == null) return;
 
         GameObject clone = Instantiate(selectedPrefab, emptyTile.transform.position, Quaternion.identity);
         emptyTile.SetUnit(clone);
     }
 
-    private Tile FindFirstEmptyTile()
+    private Tile FindTile()
     {
         for (int i = 0; i < tiles.Length; i++)
         {
@@ -45,7 +53,7 @@ public class UnitSpawner : MonoBehaviour
         return null;
     }
 
-    private GameObject GetRandomUnitPrefab()
+    private GameObject GetUnit()
     {
         if (unitPrefabs == null || unitPrefabs.Length < 3)
         {
