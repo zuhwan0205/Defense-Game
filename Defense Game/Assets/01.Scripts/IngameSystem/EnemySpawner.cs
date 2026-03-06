@@ -13,11 +13,11 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         // 시작 프리팹 세팅
-        SetPrefabByRound(roundManager != null ? roundManager.CurrentRound : 1);
+        SetRound(roundManager != null ? roundManager.CurrentRound : 1);
 
         // 라운드 이벤트 구독
         if (roundManager != null)
-            roundManager.OnRoundStarted += HandleRoundStarted;
+            roundManager.OnRoundStarted += HandleStarted;
 
         spawnCo = StartCoroutine(SpawnEnemy());
     }
@@ -25,15 +25,15 @@ public class EnemySpawner : MonoBehaviour
     private void OnDestroy()
     {
         if (roundManager != null)
-            roundManager.OnRoundStarted -= HandleRoundStarted;
+            roundManager.OnRoundStarted -= HandleStarted;
     }
 
-    private void HandleRoundStarted(int round)
+    private void HandleStarted(int round)
     {
-        SetPrefabByRound(round);
+        SetRound(round);
     }
 
-    private void SetPrefabByRound(int round)
+    private void SetRound(int round)
     {
         if (enemyPrefabs == null || enemyPrefabs.Length == 0)
         {

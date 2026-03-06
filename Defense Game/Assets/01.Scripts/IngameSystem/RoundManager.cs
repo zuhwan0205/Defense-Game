@@ -49,11 +49,11 @@ public class RoundManager : MonoBehaviour
 
         if (RemainingTime <= 0f)
         {
-            EndCurrentRound();
+            EndRound();
         }
     }
 
-    private void EndCurrentRound()
+    private void EndRound()
     {
         OnRoundEnded?.Invoke(CurrentRound);
 

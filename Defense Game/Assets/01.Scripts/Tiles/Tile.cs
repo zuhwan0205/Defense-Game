@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Tile targetTile = GetTileUnderPointer(eventData);
+        Tile targetTile = GetTilePointer(eventData);
 
         if (targetTile != null)
             tileManager.TryDrop(targetTile);
@@ -44,7 +44,7 @@ public class Tile : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             tileManager.EndDragging();
     }
 
-    private Tile GetTileUnderPointer(PointerEventData eventData)
+    private Tile GetTilePointer(PointerEventData eventData)
     {
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         pointerData.position = eventData.position;
