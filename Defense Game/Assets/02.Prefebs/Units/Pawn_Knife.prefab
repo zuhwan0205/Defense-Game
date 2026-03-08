@@ -134,6 +134,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  unitID: 2
+  tier: 1
 --- !u!114 &1207101617759185044
 MonoBehaviour:
   m_ObjectHideFlags: 0

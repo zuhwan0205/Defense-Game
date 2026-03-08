@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class UnitBase : MonoBehaviour
 {
-    [Header("Stats")]
+    [Header("스탯")]
     [SerializeField] protected float attackRange = 3f;
     [SerializeField] protected float attackDelay = 1f;
     [SerializeField] protected int damage = 1;
     [SerializeField] protected LayerMask enemyLayer;
+    
+    [Header("유닛 정보")]
+    public int unitID;   // pawn_Axe,Hammer,knife,Archer,Lancer,Warrior 순서대로 0~5
+    public int tier;     // 강화 단계(pawn은 1, 나머지 2)
 
     protected Transform currentTarget;
     protected float lastAttackTime;
@@ -22,7 +26,7 @@ public class UnitBase : MonoBehaviour
     {
         if (currentTarget == null || !IsTargetInRange(currentTarget))
         {
-            currentTarget = FindClosestEnemy();
+            currentTarget = FindEnemy();
         }
 
         if (currentTarget != null && Time.time >= lastAttackTime + attackDelay)
@@ -32,7 +36,7 @@ public class UnitBase : MonoBehaviour
         }
     }
 
-    protected Transform FindClosestEnemy()
+    protected Transform FindEnemy()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
 
