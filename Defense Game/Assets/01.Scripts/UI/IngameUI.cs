@@ -12,11 +12,16 @@ public class IngameUI : MonoBehaviour
     [SerializeField] private GoldManager goldManager;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI summonCostText;
-
+    
 
     public void OnClickSummon()
     {
         IngameEvent.OnClickSummonButton?.Invoke();
+    }
+
+    public void OnClickMerge()
+    {
+        IngameEvent.OnClickMergeButton?.Invoke();
     }
 
     private void OnEnable()

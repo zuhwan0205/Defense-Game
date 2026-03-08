@@ -6,6 +6,8 @@ public class UnitSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] unitPrefabs;
     [SerializeField] private Tile[] tiles;
+    
+    public Tile[] Tiles => tiles;
 
     private void OnEnable()
     {
@@ -66,5 +68,11 @@ public class UnitSpawner : MonoBehaviour
         if (random < 50f) return unitPrefabs[0];
         if (random < 80f) return unitPrefabs[1];
         return unitPrefabs[2];
+    }
+    
+    public void SpawnMergedUnit(GameObject prefab, Tile tile)
+    {
+        GameObject clone = Instantiate(prefab, tile.transform.position, Quaternion.identity);
+        tile.SetUnit(clone);
     }
 }
