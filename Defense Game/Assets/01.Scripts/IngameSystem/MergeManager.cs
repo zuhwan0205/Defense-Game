@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MergeManager : MonoBehaviour
 {
+    public static MergeManager Instance { get; private set; }
+
     [System.Serializable]
     public class UnitPrefabInfo
     {
@@ -15,26 +18,85 @@ public class MergeManager : MonoBehaviour
     [SerializeField] private List<UnitPrefabInfo> unitPrefabs = new List<UnitPrefabInfo>();
     [SerializeField] private int maxTier = 2;
 
-    void OnEnable()
+    [Header("Merge UI")]
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Vector3 uiOffset = new Vector3(0f, 1.5f, 0f);
+
+    private UnitBase selectedUnit;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void OnEnable()
     {
         IngameEvent.OnClickMergeButton += OnClickCombine;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         IngameEvent.OnClickMergeButton -= OnClickCombine;
+    }
+
+    void Start()
+    {
+        
+    }
+    
+    private void Update() //유닛이 이동하는 동안에 버튼이 움직여야 함
+    {
+        UpdateMergeUIPosition();
+    }
+
+    public void SelectUnit(UnitBase unit)
+    {
+        if (unit == null)
+            return;
+
+        selectedUnit = unit;
+        UpdateMergeUIPosition();
+        RefreshMergeUI();
+    }
+
+    public void ClearSelection()
+    {
+        selectedUnit = null;
+        RefreshMergeUI();
+    }
+
+    private void UpdateMergeUIPosition()
+    {
+        if (selectedUnit == null || mainCamera == null)
+            return;
+
+        Vector3 worldPos = selectedUnit.transform.position + uiOffset;
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(worldPos);
+        IngameEvent.OnSetMergeBtn_P?.Invoke(screenPos);
+    }
+    
+    public void RefreshMergeUI()
+    {
+        IngameEvent.OnSetMergeBtn_V?.Invoke(true);
+        IngameEvent.OnSetMergeBtn_I?.Invoke(CanMergeUnit());
     }
 
     public void OnClickCombine()
     {
         bool merged = TryMerge();
 
-        if (!merged) Debug.Log("조합 가능한 유닛이 없습니다.");
+        if (!merged)
+            Debug.Log("조합 가능한 유닛이 없습니다.");
+
+        RefreshMergeUI();
     }
 
-    private bool TryMerge()
+    private bool CanMergeUnit()
     {
-        Dictionary<string, List<GameObject>> groups = new Dictionary<string, List<GameObject>>();
+        if (selectedUnit == null) return false;
+        if (selectedUnit.tier >= maxTier) return false;
+
+        int count = 0;
 
         foreach (Tile tile in unitSpawner.Tiles)
         {
@@ -42,45 +104,52 @@ public class MergeManager : MonoBehaviour
 
             GameObject unitObj = tile.CurrentUnit;
             UnitBase unitData = unitObj.GetComponent<UnitBase>();
+            if (unitData == null) continue;
 
-            if (unitData == null)
+            if (unitData.unitID == selectedUnit.unitID && unitData.tier == selectedUnit.tier)
             {
-                Debug.LogWarning($"{unitObj.name} 에 UnitData가 없습니다.");
-                continue;
-            }
-
-            if (unitData.tier >= maxTier) continue;
-
-            string key = $"{unitData.unitID}_{unitData.tier}";
-
-            if (!groups.ContainsKey(key))
-                groups[key] = new List<GameObject>();
-
-            groups[key].Add(unitObj);
-        }
-
-        foreach (var pair in groups)
-        {
-            List<GameObject> sameUnits = pair.Value;
-
-            if (sameUnits.Count >= 3)
-            {
-                MergedUnits(sameUnits[0], sameUnits[1], sameUnits[2]);
-                return true;
+                count++;
+                if (count >= 3)
+                    return true;
             }
         }
 
         return false;
     }
 
-    private void MergedUnits(GameObject unit1, GameObject unit2, GameObject unit3)
+    private bool TryMerge()
+    {
+        if (selectedUnit == null) return false;
+        if (selectedUnit.tier >= maxTier) return false;
+
+        List<GameObject> sameUnits = new List<GameObject>();
+
+        foreach (Tile tile in unitSpawner.Tiles)
+        {
+            if (tile == null || !tile.IsUnitSpawned) continue;
+
+            GameObject unitObj = tile.CurrentUnit;
+            UnitBase unitData = unitObj.GetComponent<UnitBase>();
+            if (unitData == null) continue;
+
+            if (unitData.unitID == selectedUnit.unitID && unitData.tier == selectedUnit.tier)
+                sameUnits.Add(unitObj);
+        }
+
+        if (sameUnits.Count < 3)
+            return false;
+
+        MergeUnits(sameUnits[0], sameUnits[1], sameUnits[2]);
+        ClearSelection();
+        return true;
+    }
+
+    private void MergeUnits(GameObject unit1, GameObject unit2, GameObject unit3)
     {
         UnitBase data = unit1.GetComponent<UnitBase>();
         if (data == null) return;
-        
+
         int nextTier = data.tier + 1;
-        
-        Debug.Log($"합성 시도: 현재 unitID={data.unitID}, 현재 tier={data.tier}");
 
         Tile spawnTile = unit1.transform.parent.GetComponent<Tile>();
         if (spawnTile == null)
@@ -88,15 +157,14 @@ public class MergeManager : MonoBehaviour
             Debug.LogWarning("합성 생성 타일을 찾을 수 없습니다.");
             return;
         }
-        
+
         GameObject mergedPrefab = GetMergedUnit(nextTier);
-        
+
         if (mergedPrefab == null)
         {
             Debug.LogError($"합성 결과 프리팹이 null 입니다. tier={nextTier}");
             return;
         }
-
 
         RemoveUnit(unit1);
         RemoveUnit(unit2);
