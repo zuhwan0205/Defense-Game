@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UnitBase : MonoBehaviour
+public class UnitBase : MonoBehaviour, IPointerClickHandler
 {
     [Header("스탯")]
     [SerializeField] protected float attackRange = 3f;
@@ -66,5 +67,13 @@ public class UnitBase : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+    
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log($"{name} 클릭됨");
+
+        if (MergeManager.Instance == null) return;
+        MergeManager.Instance.SelectUnit(this);
     }
 }

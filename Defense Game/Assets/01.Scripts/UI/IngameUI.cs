@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class IngameUI : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class IngameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI summonCostText;
     
+    [Header("조합 UI")]
+    [SerializeField] private GameObject mergeButtonUI;
+    [SerializeField] private Button mergeButton;
 
     public void OnClickSummon()
     {
@@ -37,8 +41,13 @@ public class IngameUI : MonoBehaviour
             goldManager.OnSummonCostChanged += SummonCostChanged;
             goldManager.OnGoldChanged += OnGoldChanged;
         }
+        
+        IngameEvent.OnSetMergeBtn_V += SetMergeBtn_V;
+        IngameEvent.OnSetMergeBtn_I += SetMergeBtn_I;
+        IngameEvent.OnSetMergeBtn_P += SetMergeBtn_P;
 
         RefreshUI(); // 처음 1번 갱신
+        SetMergeBtn_V(false);
     }
 
     private void OnDisable()
@@ -54,6 +63,10 @@ public class IngameUI : MonoBehaviour
             goldManager.OnSummonCostChanged -= SummonCostChanged;
             goldManager.OnGoldChanged -= OnGoldChanged;
         }
+        
+        IngameEvent.OnSetMergeBtn_V -= SetMergeBtn_V;
+        IngameEvent.OnSetMergeBtn_I -= SetMergeBtn_I;
+        IngameEvent.OnSetMergeBtn_P -= SetMergeBtn_P;
     }
 
     private void Update()
@@ -112,5 +125,23 @@ public class IngameUI : MonoBehaviour
         if (goldManager == null || summonCostText == null) return;
 
         summonCostText.text = $" Cost: {goldManager.CurrentSummonCost}";
+    }
+    
+    private void SetMergeBtn_V(bool visible)
+    {
+        if (mergeButtonUI != null)
+            mergeButtonUI.SetActive(visible);
+    }
+
+    private void SetMergeBtn_I(bool interactable)
+    {
+        if (mergeButton != null)
+            mergeButton.interactable = interactable;
+    }
+
+    private void SetMergeBtn_P(Vector3 screenPosition)
+    {
+        if (mergeButtonUI != null)
+            mergeButtonUI.transform.position = screenPosition;
     }
 }

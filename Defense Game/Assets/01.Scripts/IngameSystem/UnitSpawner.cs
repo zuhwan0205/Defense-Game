@@ -41,6 +41,7 @@ public class UnitSpawner : MonoBehaviour
 
         GameObject clone = Instantiate(selectedPrefab, emptyTile.transform.position, Quaternion.identity);
         emptyTile.SetUnit(clone);
+        MergeManager.Instance.RefreshMergeUI();
     }
 
     private Tile FindTile()

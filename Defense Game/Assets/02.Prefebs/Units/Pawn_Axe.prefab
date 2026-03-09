@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5856114524313098033}
   - component: {fileID: 6521244065485838215}
   - component: {fileID: 8768146916212516397}
+  - component: {fileID: -6615885808537557755}
   m_Layer: 0
   m_Name: Pawn_Axe
   m_TagString: Untagged
@@ -149,3 +150,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeSingleAttack
   animator: {fileID: 5856114524313098033}
+--- !u!70 &-6615885808537557755
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931142931934759798}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0070906878, y: -0.06736207}
+  m_Size: {x: 0.7593267, y: 1.1634989}
+  m_Direction: 0
