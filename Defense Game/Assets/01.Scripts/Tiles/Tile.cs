@@ -6,7 +6,12 @@ using UnityEngine.InputSystem;
 public class Tile : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] private TileManager tileManager;
+    
+    [Header("타일 옵션")]
+    [SerializeField] private bool canSpawn = true;   // 소환 가능 여부
 
+    public bool CanSpawn => canSpawn;
+    
     public bool IsUnitSpawned => CurrentUnit != null;
     public GameObject CurrentUnit { get; private set; }
 

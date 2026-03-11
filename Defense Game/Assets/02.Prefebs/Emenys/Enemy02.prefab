@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2442499139661649136}
   - component: {fileID: 3610301649729968773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1516221892673885210}
   - component: {fileID: 1455697127675757204}
   - component: {fileID: 8322541806829686364}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5857628011564979455}
   - component: {fileID: 4272553441631588987}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2392577749555342238}
   - component: {fileID: 988116336124930491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210954367174025594}
   - component: {fileID: 6854700444389124581}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wing Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

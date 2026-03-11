@@ -9,9 +9,16 @@ public class EnemyControler : MonoBehaviour
     private int currentIndex = 0;   // 현재 목표지점 인덱스
     [SerializeField] private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
     [SerializeField] private int hp = 10;
+    [SerializeField] private bool isBoss = false;
 
     public void Setup(Transform[] wayPoints)
     {
+        if(isBoss)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            return;
+        }
+        
         // 적 이동 경로 wayPoint 정보 저장
         wayPointCount = wayPoints.Length;
         this.wayPoints = new Transform[wayPointCount];
