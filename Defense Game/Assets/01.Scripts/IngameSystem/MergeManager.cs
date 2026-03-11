@@ -15,6 +15,7 @@ public class MergeManager : MonoBehaviour
     }
 
     [SerializeField] private UnitSpawner unitSpawner;
+    [SerializeField] private TileRegister tileRegister;
     [SerializeField] private List<UnitPrefabInfo> unitPrefabs = new List<UnitPrefabInfo>();
     [SerializeField] private int maxTier = 2;
 
@@ -77,6 +78,12 @@ public class MergeManager : MonoBehaviour
     
     public void RefreshMergeUI()
     {
+        if (selectedUnit == null)
+        {
+            IngameEvent.OnSetMergeBtn_V?.Invoke(false);
+            return;
+        }
+
         IngameEvent.OnSetMergeBtn_V?.Invoke(true);
         IngameEvent.OnSetMergeBtn_I?.Invoke(CanMergeUnit());
     }
@@ -98,7 +105,7 @@ public class MergeManager : MonoBehaviour
 
         int count = 0;
 
-        foreach (Tile tile in unitSpawner.Tiles)
+        foreach (Tile tile in tileRegister.Tiles)
         {
             if (tile == null || !tile.IsUnitSpawned) continue;
 
@@ -124,7 +131,7 @@ public class MergeManager : MonoBehaviour
 
         List<GameObject> sameUnits = new List<GameObject>();
 
-        foreach (Tile tile in unitSpawner.Tiles)
+        foreach (Tile tile in tileRegister.Tiles)
         {
             if (tile == null || !tile.IsUnitSpawned) continue;
 

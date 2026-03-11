@@ -5,9 +5,7 @@ using Random = UnityEngine.Random;
 public class UnitSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] unitPrefabs;
-    [SerializeField] private Tile[] tiles;
-    
-    public Tile[] Tiles => tiles;
+    [SerializeField] private TileRegister tileRegister;
 
     private void OnEnable()
     {
@@ -21,7 +19,7 @@ public class UnitSpawner : MonoBehaviour
 
     public void SpawnUnit()
     {
-        Tile emptyTile = FindTile();
+        Tile emptyTile = tileRegister.FindTile();
         
         //소환시 골드 확인
         if(!GoldManager.Instance.TrySpend())
@@ -42,18 +40,6 @@ public class UnitSpawner : MonoBehaviour
         GameObject clone = Instantiate(selectedPrefab, emptyTile.transform.position, Quaternion.identity);
         emptyTile.SetUnit(clone);
         MergeManager.Instance.RefreshMergeUI();
-    }
-
-    private Tile FindTile()
-    {
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            if (!tiles[i].IsUnitSpawned)
-            {
-                return tiles[i];
-            }
-        }
-        return null;
     }
 
     private GameObject GetUnit()
