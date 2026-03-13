@@ -9,8 +9,10 @@ public class Tile : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     
     [Header("타일 옵션")]
     [SerializeField] private bool canSpawn = true;   // 소환 가능 여부
+    [SerializeField] private bool isBossTile = false;
 
     public bool CanSpawn => canSpawn;
+    public bool IsBossTile => isBossTile;
     
     public bool IsUnitSpawned => CurrentUnit != null;
     public GameObject CurrentUnit { get; private set; }

@@ -8,6 +8,7 @@ public class UnitBase : MonoBehaviour, IPointerClickHandler
     [SerializeField] protected float attackDelay = 1f;
     [SerializeField] protected int damage = 1;
     [SerializeField] protected LayerMask enemyLayer;
+    private float bossTileBonusRange = 5f;
     
     [Header("유닛 정보")]
     public int unitID;   // pawn_Axe,Hammer,knife,Archer,Lancer,Warrior 순서대로 0~5
@@ -39,7 +40,7 @@ public class UnitBase : MonoBehaviour, IPointerClickHandler
 
     protected Transform FindEnemy()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, GetCurrentAttackRange(), enemyLayer);
 
         Transform closest = null;
         float minDistance = Mathf.Infinity;
@@ -60,13 +61,13 @@ public class UnitBase : MonoBehaviour, IPointerClickHandler
     protected bool IsTargetInRange(Transform target)
     {
         if (target == null) return false;
-        return Vector2.Distance(transform.position, target.position) <= attackRange;
+        return Vector2.Distance(transform.position, target.position) <= GetCurrentAttackRange();
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, GetCurrentAttackRange());
     }
     
     public void OnPointerClick(PointerEventData eventData)
@@ -75,5 +76,16 @@ public class UnitBase : MonoBehaviour, IPointerClickHandler
 
         if (MergeManager.Instance == null) return;
         MergeManager.Instance.SelectUnit(this);
+    }
+    
+    private bool IsOnBossTile()         //지금은 사거리만 넣었는데 나중에 아이템 추가 하면 다른 기능도 넣을 예정
+    {
+        Tile tile = transform.parent != null ? transform.parent.GetComponent<Tile>() : null;
+        return tile != null && tile.IsBossTile;
+    }
+    
+    private float GetCurrentAttackRange()
+    {
+        return IsOnBossTile() ? attackRange + bossTileBonusRange : attackRange;
     }
 }
