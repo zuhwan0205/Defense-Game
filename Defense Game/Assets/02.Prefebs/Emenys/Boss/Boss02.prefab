@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5336650964480132880}
   - component: {fileID: 3734421585079973060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg Left (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3000793796719067665}
   - component: {fileID: 3267510095140032434}
   - component: {fileID: -173875927835439272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boss02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2320278899212717824}
   - component: {fileID: 1571275211646386913}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8425398556393593710}
   - component: {fileID: 5813969384523499460}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5696295377178053493}
   - component: {fileID: 864013289116304715}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg Right (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5671082522562157068}
   - component: {fileID: 2048906815252946541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leg Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
