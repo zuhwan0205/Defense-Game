@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6210128764781790476}
   - component: {fileID: 7980019540715885461}
   - component: {fileID: 3082410131206482545}
+  - component: {fileID: -210712722646357784}
   - component: {fileID: 8371652659783314896}
   m_Layer: 0
   m_Name: Warrior
@@ -136,6 +137,19 @@ MonoBehaviour:
     m_Bits: 64
   unitID: 5
   tier: 2
+--- !u!114 &-210712722646357784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071951372447939455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7cee9d7af30eb4086f67ecadcb816d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeSingleAttack
+  animator: {fileID: 7980019540715885461}
 --- !u!58 &8371652659783314896
 CircleCollider2D:
   m_ObjectHideFlags: 0
