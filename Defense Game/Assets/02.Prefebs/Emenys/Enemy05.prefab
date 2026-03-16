@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 4189145627016964683}
   - component: {fileID: 3497008682920494201}
   - component: {fileID: 3300730957254169297}
+  - component: {fileID: 6877881778838011674}
   m_Layer: 6
   m_Name: Enemy05
   m_TagString: Untagged
@@ -348,7 +349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyControler
   wayPoints: []
   enemyMovement: {fileID: 3497008682920494201}
-  hp: 10
+  isBoss: 0
+  enemyStats: {fileID: 0}
 --- !u!114 &3497008682920494201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +402,20 @@ CapsuleCollider2D:
   m_Offset: {x: -0.28173316, y: 0.029656067}
   m_Size: {x: 1.0634663, y: 1.5676199}
   m_Direction: 0
+--- !u!114 &6877881778838011674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390366974094992952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4609c06d866cc499faa9c285d0c7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  hp: 10
+  defense: 25
 --- !u!1 &7405122064788901967
 GameObject:
   m_ObjectHideFlags: 0

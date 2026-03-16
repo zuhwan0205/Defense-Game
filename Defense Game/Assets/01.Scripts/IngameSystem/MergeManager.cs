@@ -17,7 +17,7 @@ public class MergeManager : MonoBehaviour
     [SerializeField] private UnitSpawner unitSpawner;
     [SerializeField] private TileRegister tileRegister;
     [SerializeField] private List<UnitPrefabInfo> unitPrefabs = new List<UnitPrefabInfo>();
-    [SerializeField] private int maxTier = 2;
+    [SerializeField] private int maxTier = 3;
 
     [Header("Merge UI")]
     [SerializeField] private Camera mainCamera;

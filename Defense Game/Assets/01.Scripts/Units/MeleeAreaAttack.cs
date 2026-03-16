@@ -45,7 +45,7 @@ public class MeleeAreaAttack : MonoBehaviour,  IAttackHandler
 
         foreach (Collider2D hit in hits)
         {
-            EnemyControler enemy = hit.GetComponent<EnemyControler>();
+            EnemyStats enemy = hit.GetComponent<EnemyStats>();
             if (enemy != null)
             {
                 enemy.TakeDamage(Damage);
