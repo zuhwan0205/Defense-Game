@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 2698363800553330481}
   - component: {fileID: 7979798537215746735}
   - component: {fileID: -4498525246232817671}
+  - component: {fileID: -5621028638664198730}
   m_Layer: 6
   m_Name: Enemy01
   m_TagString: Untagged
@@ -439,7 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EmenyControler
   wayPoints: []
   enemyMovement: {fileID: 7979798537215746735}
-  hp: 10
+  isBoss: 0
+  enemyStats: {fileID: 0}
 --- !u!114 &7979798537215746735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,3 +493,17 @@ CapsuleCollider2D:
   m_Offset: {x: -0.30905914, y: -0.00000023841858}
   m_Size: {x: 1.1181183, y: 1.6217704}
   m_Direction: 0
+--- !u!114 &-5621028638664198730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9004148124358793283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4609c06d866cc499faa9c285d0c7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  hp: 10
+  defense: 10

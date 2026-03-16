@@ -8,8 +8,8 @@ public class EnemyControler : MonoBehaviour
     [SerializeField] private Transform[] wayPoints;          // 이동 경로 정보
     private int currentIndex = 0;   // 현재 목표지점 인덱스
     [SerializeField] private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
-    [SerializeField] private int hp = 10;
     [SerializeField] private bool isBoss = false;
+    [SerializeField] private EnemyStats enemyStats;
 
     public void Setup(Transform[] wayPoints)
     {
@@ -70,23 +70,6 @@ public class EnemyControler : MonoBehaviour
         // 다음 목표 방향 계산
         Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
         enemyMovement.MoveTo(direction);
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        hp -= damage;
-
-        if (hp <= 0)
-        {
-            Die();
-        }
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
-        GoldManager.Instance.AddGold(1);
-        //사망 애니메이션이나 이펙트 추가해야함
     }
 }
 

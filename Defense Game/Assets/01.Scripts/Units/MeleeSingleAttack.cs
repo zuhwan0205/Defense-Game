@@ -27,7 +27,7 @@ public class MeleeSingleAttack : MonoBehaviour, IAttackHandler
         if (Target == null) return;
 
         // 타겟이 죽었거나 사라졌으면 종료
-        EnemyControler enemy = Target.GetComponent<EnemyControler>();
+        EnemyStats enemy = Target.GetComponent<EnemyStats>();
         if (enemy != null)
         {
             enemy.TakeDamage(Damage);

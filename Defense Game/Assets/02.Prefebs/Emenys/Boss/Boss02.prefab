@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 3000793796719067665}
   - component: {fileID: 3267510095140032434}
   - component: {fileID: -173875927835439272}
+  - component: {fileID: -5500645589536457679}
   m_Layer: 6
   m_Name: Boss02
   m_TagString: Untagged
@@ -166,8 +167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyControler
   wayPoints: []
   enemyMovement: {fileID: -173875927835439272}
-  hp: 10
   isBoss: 1
+  enemyStats: {fileID: 0}
 --- !u!114 &-173875927835439272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +183,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   moveSpeed: 0
   moveDirection: {x: 0, y: 0, z: 0}
+--- !u!114 &-5500645589536457679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592430494601105293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4609c06d866cc499faa9c285d0c7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  hp: 200
+  defense: 50
 --- !u!1 &5060798034491104270
 GameObject:
   m_ObjectHideFlags: 0

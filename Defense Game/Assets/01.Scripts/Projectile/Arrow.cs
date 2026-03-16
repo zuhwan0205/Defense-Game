@@ -44,7 +44,7 @@ public class Arrow : MonoBehaviour
     {
         if (target != null)
         {
-            EnemyControler enemy = target.GetComponent<EnemyControler>();
+            EnemyStats enemy = target.GetComponent<EnemyStats>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
