@@ -1,75 +1,81 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
 {
-    private int wayPointCount;      // 이동 경로 개수
-    [SerializeField] private Transform[] wayPoints;          // 이동 경로 정보
-    private int currentIndex = 0;   // 현재 목표지점 인덱스
-    [SerializeField] private EnemyMovement  enemyMovement;         // 오브젝트 이동 제어
+    private int wayPointCount;
+    [SerializeField] private Transform[] wayPoints;
+    private int currentIndex = 0;
+
+    [SerializeField] private EnemyMovement enemyMovement;
     [SerializeField] private bool isBoss = false;
     [SerializeField] private EnemyStats enemyStats;
 
-    public void Setup(Transform[] wayPoints)
+    private Coroutine moveCoroutine;
+
+    public void Setup(Transform[] points)
     {
-        if(isBoss)
+        if (isBoss)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
             return;
         }
-        
-        // 적 이동 경로 wayPoint 정보 저장
-        wayPointCount = wayPoints.Length;
-        this.wayPoints = new Transform[wayPointCount];
-        this.wayPoints = wayPoints;
 
-        // 적의 위치를 첫번째 wayPoint 위치로 설정
+        if (points == null || points.Length == 0)
+        {
+            Debug.LogWarning($"{name}: wayPoints가 비어있음");
+            return;
+        }
+
+        wayPoints = points;
+        wayPointCount = wayPoints.Length;
+        currentIndex = 0;
+
         transform.position = wayPoints[currentIndex].position;
 
-        StartCoroutine(OnMove());
+        if (moveCoroutine != null)
+            StopCoroutine(moveCoroutine);
+
+        moveCoroutine = StartCoroutine(OnMove());
     }
 
-    /// <summary>
-    /// 적 이동/목표지점 설정 코루틴
-    /// </summary>
     private IEnumerator OnMove()
     {
-        NextMoveTo();
-
-        while(true)
+        while (true)
         {
-            if(Vector3.Distance(transform.position,wayPoints[currentIndex].position)<0.02f * enemyMovement.MoveSpeed)
+            Transform targetPoint = wayPoints[currentIndex];
+
+            SetDirc(targetPoint.position);
+
+            while (Vector3.Distance(transform.position, targetPoint.position) > 0.01f)
             {
-                NextMoveTo();
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    targetPoint.position,
+                    enemyMovement.MoveSpeed * Time.deltaTime
+                );
+
+                yield return null;
             }
-            yield return null;
+
+            transform.position = targetPoint.position;
+
+            currentIndex++;
+
+            if (currentIndex >= wayPointCount)
+            {
+                currentIndex = 0; // 순환형 경로일 때
+                // 순환이 아니라 끝나야 하면:
+                // yield break;
+            }
         }
     }
 
-    /// <summary>
-    /// 다음 이동 방향 설정
-    /// </summary>
-    private void NextMoveTo()
+    private void SetDirc(Vector3 targetPos)
     {
-        //이전 웨이포인트 인덱스 기억
-        int prevIndex = currentIndex;
-        
-        // 현재 목표 지점에 정확히 맞춤
-        transform.position = wayPoints[currentIndex].position;
-
-        // 다음 인덱스로 이동 (마지막이면 다시 0)
-        currentIndex = (currentIndex + 1) % wayPointCount;
-        
-        bool lookLeft = (prevIndex == 2 && currentIndex == 3) || (prevIndex == 3 && currentIndex == 0);
-
-        transform.localScale = lookLeft
-            ? new Vector3(1f, 1f, 1f)
-            : new Vector3(-1f, 1f, 1f);
-
-        // 다음 목표 방향 계산
-        Vector3 direction = (wayPoints[currentIndex].position - transform.position).normalized;
-        enemyMovement.MoveTo(direction);
+        if (targetPos.x < transform.position.x)
+            transform.localScale = new Vector3(0.8f, 0.8f, 1f);
+        else if (targetPos.x > transform.position.x)
+            transform.localScale = new Vector3(-0.8f, 0.8f, 1f);
     }
 }
-
