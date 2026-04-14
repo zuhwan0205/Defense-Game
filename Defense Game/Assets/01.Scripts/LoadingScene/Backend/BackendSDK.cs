@@ -17,9 +17,6 @@ public class BackendManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            backendLogin = GetComponent<BackendLogin>();
-            backendGameData = GetComponent<BackendGameData>();
-
             if (backendLogin == null)
                 Debug.LogError("BackendLogin 컴포넌트가 없습니다.");
 

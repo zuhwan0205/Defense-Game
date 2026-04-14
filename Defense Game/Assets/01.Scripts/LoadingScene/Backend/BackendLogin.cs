@@ -6,7 +6,9 @@ public class BackendLogin : MonoBehaviour
     private BackendManager backendManager;
 
     public bool IsLoggedIn { get; private set; }
-
+    
+    public System.Action<string> OnLoginFailed;
+    
     private void Awake()
     {
         backendManager = GetComponent<BackendManager>();
@@ -48,6 +50,7 @@ public class BackendLogin : MonoBehaviour
         }
         else
         {
+            OnErrorLogin();
             Debug.LogError("게스트 로그인 실패 : " + bro);
         }
     }
@@ -58,6 +61,7 @@ public class BackendLogin : MonoBehaviour
 
         if (bro.IsSuccess())
         {
+            OnLoginSuccess();
             Debug.Log("회원가입 성공 : " + bro);
         }
         else
@@ -77,28 +81,16 @@ public class BackendLogin : MonoBehaviour
         }
         else
         {
+            OnErrorLogin();
             Debug.LogError("커스텀 로그인 실패 : " + bro);
         }
     }
 
-    public void UpdateNickname(string nickname)
+    public bool UpdateNickname(string nickname)
     {
-        if (string.IsNullOrWhiteSpace(nickname))
-        {
-            Debug.LogError("닉네임이 비어 있습니다.");
-            return;
-        }
-
         var bro = Backend.BMember.UpdateNickname(nickname);
-
-        if (bro.IsSuccess())
-        {
-            Debug.Log("닉네임 변경 성공 : " + bro);
-        }
-        else
-        {
-            Debug.LogError("닉네임 변경 실패 : " + bro);
-        }
+        if (bro.IsSuccess()) { Debug.Log("닉네임 변경 성공"); return true; }
+        Debug.LogError("닉네임 변경 실패 : " + bro); return false;
     }
 
     private void OnLoginSuccess()
@@ -111,5 +103,10 @@ public class BackendLogin : MonoBehaviour
         Debug.Log("NickName : " + Backend.UserNickName);
 
         backendManager.OnLoginSuccess();
+    }
+
+    private void OnErrorLogin()
+    {
+        OnLoginFailed?.Invoke("로그인 실패");
     }
 }
