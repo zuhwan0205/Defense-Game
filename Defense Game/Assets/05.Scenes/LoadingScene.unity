@@ -1504,6 +1504,8 @@ GameObject:
   - component: {fileID: 1341559635}
   - component: {fileID: 1341559639}
   - component: {fileID: 1341559638}
+  - component: {fileID: 1341559640}
+  - component: {fileID: 1341559641}
   m_Layer: 0
   m_Name: BackendManager
   m_TagString: Untagged
@@ -1564,6 +1566,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7338931acdd3d348bab786ab13427a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackendGameData
+  inventory: {fileID: 1341559640}
+  mercenary: {fileID: 1341559641}
+--- !u!114 &1341559640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341559634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5588e9318883dcb418dee594b1f0c98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackendInventory
+--- !u!114 &1341559641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341559634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263ea5fe0385c434d84cad48fb6b40a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackendMercenary
 --- !u!1 &1376393338
 GameObject:
   m_ObjectHideFlags: 0
