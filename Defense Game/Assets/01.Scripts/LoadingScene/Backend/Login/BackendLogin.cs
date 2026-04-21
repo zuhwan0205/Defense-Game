@@ -3,7 +3,9 @@ using BackEnd;
 
 public class BackendLogin : MonoBehaviour
 {
-    private BackendManager backendManager;
+    [SerializeField] private BackendManager backendManager;
+    
+    public System.Action OnLoginSelect;
 
     public bool IsLoggedIn { get; private set; }
     
@@ -11,8 +13,6 @@ public class BackendLogin : MonoBehaviour
     
     private void Awake()
     {
-        backendManager = GetComponent<BackendManager>();
-
         if (backendManager == null)
         {
             Debug.LogError("BackendManager 컴포넌트가 없습니다.");
@@ -33,9 +33,10 @@ public class BackendLogin : MonoBehaviour
         else
         {
             Debug.LogWarning("자동 로그인 실패 : " + bro);
-            GuestLogin();
+            OnLoginSelect?.Invoke();
         }
     }
+
 
     public void GuestLogin()
     {
@@ -54,35 +55,20 @@ public class BackendLogin : MonoBehaviour
             Debug.LogError("게스트 로그인 실패 : " + bro);
         }
     }
-
-    public void CustomSignUp(string id, string pw)
+    
+    public void GoogleLogin(string idToken)
     {
-        var bro = Backend.BMember.CustomSignUp(id, pw);
+        var bro = Backend.BMember.AuthorizeFederation(idToken, FederationType.Google);
 
         if (bro.IsSuccess())
         {
-            OnLoginSuccess();
-            Debug.Log("회원가입 성공 : " + bro);
-        }
-        else
-        {
-            Debug.LogError("회원가입 실패 : " + bro);
-        }
-    }
-
-    public void CustomLogin(string id, string pw)
-    {
-        var bro = Backend.BMember.CustomLogin(id, pw);
-
-        if (bro.IsSuccess())
-        {
-            Debug.Log("커스텀 로그인 성공 : " + bro);
+            Debug.Log("구글 로그인 성공");
             OnLoginSuccess();
         }
         else
         {
             OnErrorLogin();
-            Debug.LogError("커스텀 로그인 실패 : " + bro);
+            Debug.LogError("구글 로그인 실패 : " + bro);
         }
     }
 
