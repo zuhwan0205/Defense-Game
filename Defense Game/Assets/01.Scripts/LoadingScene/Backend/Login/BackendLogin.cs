@@ -3,7 +3,7 @@ using BackEnd;
 
 public class BackendLogin : MonoBehaviour
 {
-    [SerializeField] private BackendManager backendManager;
+    [SerializeField] private BackendSDK backendSDK;
     
     public System.Action OnLoginSelect;
 
@@ -13,7 +13,7 @@ public class BackendLogin : MonoBehaviour
     
     private void Awake()
     {
-        if (backendManager == null)
+        if (backendSDK == null)
         {
             Debug.LogError("BackendManager 컴포넌트가 없습니다.");
         }
@@ -33,7 +33,10 @@ public class BackendLogin : MonoBehaviour
         else
         {
             Debug.LogWarning("자동 로그인 실패 : " + bro);
-            OnLoginSelect?.Invoke();
+            //OnLoginSelect?.Invoke();  로그인UI ㅇ완료 후 해제 해야함
+            Backend.BMember.DeleteGuestInfo();
+            PlayerPrefs.DeleteAll();
+            GuestLogin();
         }
     }
 
@@ -82,13 +85,15 @@ public class BackendLogin : MonoBehaviour
     private void OnLoginSuccess()
     {
         IsLoggedIn = true;
+        
+        backendSDK.ReportProgress(0.4f);
 
         Debug.Log("로그인 완료");
         Debug.Log("UID : " + Backend.UID);
         Debug.Log("InDate : " + Backend.UserInDate);
         Debug.Log("NickName : " + Backend.UserNickName);
 
-        backendManager.OnLoginSuccess();
+        backendSDK.OnAfterLogin();
     }
 
     private void OnErrorLogin()
