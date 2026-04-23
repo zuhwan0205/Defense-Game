@@ -11,6 +11,7 @@ public class BackendGameData : MonoBehaviour
 
     [SerializeField] private BackendInventory inventory;
     [SerializeField] private BackendMercenary mercenary;
+    [SerializeField] private BackendSDK backendSDK;
 
 
     #region Load
@@ -19,40 +20,65 @@ public class BackendGameData : MonoBehaviour
     {
         Debug.Log("[BackendGameData] 데이터 조회 시작");
 
+        if (!LoadPlayerData())    return;
+        backendSDK.ReportProgress(0.7f);
+        if (!LoadItemData())      return;
+        backendSDK.ReportProgress(0.85f);
+        if (!LoadMercenaryData()) return;
+        backendSDK.ReportProgress(1f);
+
+        OnDataLoaded();
+    }
+
+// ── 플레이어 ──────────────────────────────────────────────
+    private bool LoadPlayerData()
+    {
         var bro = Backend.GameData.GetMyData(TableName, new Where());
 
         if (!bro.IsSuccess())
         {
-            Debug.LogError($"[BackendGameData] 데이터 조회 실패: {bro}");
-            return;
+            Debug.LogError($"[BackendGameData] 플레이어 데이터 조회 실패: {bro}");
+            return false;
         }
 
         JsonData rows = bro.GetReturnValuetoJSON()["rows"];
 
         if (rows.Count <= 0)
         {
-            Debug.Log("[BackendGameData] 데이터 없음 → 생성");
-
-            if (!CreateMyData())
-                return;
-
-            return;
+            Debug.Log("[BackendGameData] 플레이어 데이터 없음 → 생성");
+            return CreatePlayerData();
         }
 
-        if (!ParseRowData(rows[0]))
-            return;
+        return ParseRowData(rows[0]);
+        
+    }
 
-        // 🔥 인벤토리
+// ── 아이템(인벤토리) ──────────────────────────────────────
+    private bool LoadItemData()
+    {
         inventory.InitializeInventoryIfNeeded();
+
         if (!inventory.LoadInventory())
-            return;
+        {
+            Debug.LogError("[BackendGameData] 인벤토리 로드 실패");
+            return false;
+        }
 
-        // 🔥 용병
+        return true;
+    }
+
+// ── 용병대 ────────────────────────────────────────────────
+    private bool LoadMercenaryData()
+    {
         mercenary.InitializeMercenaryIfNeeded();
-        if (!mercenary.LoadMercenary())
-            return;
 
-        OnDataLoaded();
+        if (!mercenary.LoadMercenary())
+        {
+            Debug.LogError("[BackendGameData] 용병대 로드 실패");
+            return false;
+        }
+
+        return true;
     }
 
     #endregion
@@ -88,7 +114,7 @@ public class BackendGameData : MonoBehaviour
 
     #region Create
 
-    private bool CreateMyData()
+    private bool CreatePlayerData()
     {
         Debug.Log("[BackendGameData] 초기 데이터 생성 시작");
 

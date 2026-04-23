@@ -3,7 +3,7 @@ using BackEnd;
 
 public class BackendLogin : MonoBehaviour
 {
-    [SerializeField] private BackendManager backendManager;
+    [SerializeField] private BackendSDK backendSDK;
     
     public System.Action OnLoginSelect;
 
@@ -13,7 +13,7 @@ public class BackendLogin : MonoBehaviour
     
     private void Awake()
     {
-        if (backendManager == null)
+        if (backendSDK == null)
         {
             Debug.LogError("BackendManager 컴포넌트가 없습니다.");
         }
@@ -82,13 +82,15 @@ public class BackendLogin : MonoBehaviour
     private void OnLoginSuccess()
     {
         IsLoggedIn = true;
+        
+        backendSDK.ReportProgress(0.4f);
 
         Debug.Log("로그인 완료");
         Debug.Log("UID : " + Backend.UID);
         Debug.Log("InDate : " + Backend.UserInDate);
         Debug.Log("NickName : " + Backend.UserNickName);
 
-        backendManager.OnLoginSuccess();
+        backendSDK.OnLoginSuccess();
     }
 
     private void OnErrorLogin()
