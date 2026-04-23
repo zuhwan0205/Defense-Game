@@ -57,7 +57,7 @@ public class BackendSDK : MonoBehaviour
         }
     }
 
-    public void OnLoginSuccess()
+    public void OnAfterLogin()
     {
         Debug.Log("BackendManager - 로그인 성공 후 데이터 로드 시작");
         backendGameData.LoadMyData();

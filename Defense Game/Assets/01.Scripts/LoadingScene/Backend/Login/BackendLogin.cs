@@ -33,7 +33,10 @@ public class BackendLogin : MonoBehaviour
         else
         {
             Debug.LogWarning("자동 로그인 실패 : " + bro);
-            OnLoginSelect?.Invoke();
+            //OnLoginSelect?.Invoke();  로그인UI ㅇ완료 후 해제 해야함
+            Backend.BMember.DeleteGuestInfo();
+            PlayerPrefs.DeleteAll();
+            GuestLogin();
         }
     }
 
@@ -90,7 +93,7 @@ public class BackendLogin : MonoBehaviour
         Debug.Log("InDate : " + Backend.UserInDate);
         Debug.Log("NickName : " + Backend.UserNickName);
 
-        backendSDK.OnLoginSuccess();
+        backendSDK.OnAfterLogin();
     }
 
     private void OnErrorLogin()

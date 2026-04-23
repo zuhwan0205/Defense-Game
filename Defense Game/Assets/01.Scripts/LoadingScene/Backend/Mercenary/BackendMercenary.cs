@@ -8,48 +8,52 @@ public class BackendMercenary : MonoBehaviour
     private const string TableName = "mercenary";
 
     public List<MercenaryData> Mercenaries { get; private set; } = new List<MercenaryData>();
+    
+    public JsonData FetchRows()
+    {
+        var bro = Backend.GameData.GetMyData(TableName, new Where());
+ 
+        if (!bro.IsSuccess())
+        {
+            Debug.LogError($"[Mercenary] rows 조회 실패: {bro}");
+            return null;
+        }
+ 
+        return bro.GetReturnValuetoJSON()["rows"];
+    }
 
     #region Load
 
-    public bool LoadMercenary()
+    public bool LoadMercenary(JsonData rows)
     {
         Debug.Log("[Mercenary] 로드 시작");
-
-        var bro = Backend.GameData.GetMyData(TableName, new Where());
-
-        if (!bro.IsSuccess())
-        {
-            Debug.LogError($"[Mercenary] 로드 실패: {bro}");
-            return false;
-        }
-
+ 
         try
         {
-            JsonData rows = bro.GetReturnValuetoJSON()["rows"];
             Mercenaries.Clear();
-
+ 
             for (int i = 0; i < rows.Count; i++)
             {
                 var row = rows[i];
-
+ 
                 MercenaryData data = new MercenaryData
                 {
-                    inDate = row["inDate"]["S"].ToString(),
+                    inDate      = row["inDate"]["S"].ToString(),
                     characterId = int.Parse(row["characterId"]["N"].ToString()),
-                    level = row.Keys.Contains("level") 
-                            ? int.Parse(row["level"]["N"].ToString()) 
-                            : 1,
-                    grade = row.Keys.Contains("grade") 
-                            ? int.Parse(row["grade"]["N"].ToString()) 
-                            : 0,
-                    shardCount = row.Keys.Contains("shardCount") 
-                            ? int.Parse(row["shardCount"]["N"].ToString()) 
-                            : 0
+                    level       = row.Keys.Contains("level")
+                        ? int.Parse(row["level"]["N"].ToString())
+                        : 1,
+                    grade       = row.Keys.Contains("grade")
+                        ? int.Parse(row["grade"]["N"].ToString())
+                        : 0,
+                    shardCount  = row.Keys.Contains("shardCount")
+                        ? int.Parse(row["shardCount"]["N"].ToString())
+                        : 0
                 };
-
+ 
                 Mercenaries.Add(data);
             }
-
+ 
             Debug.Log($"[Mercenary] 로드 완료: {Mercenaries.Count}개");
             return true;
         }
@@ -64,42 +68,31 @@ public class BackendMercenary : MonoBehaviour
 
     #region Init (최초 생성)
 
-    public void InitializeMercenaryIfNeeded()
+    public bool InitializeMercenary()
     {
-        var bro = Backend.GameData.GetMyData(TableName, new Where());
-
-        if (!bro.IsSuccess())
-        {
-            Debug.LogError("[Mercenary] 존재 여부 확인 실패");
-            return;
-        }
-
-        JsonData rows = bro.GetReturnValuetoJSON()["rows"];
-
-        if (rows.Count > 0)
-        {
-            Debug.Log("[Mercenary] 이미 존재 → 생성 스킵");
-            return;
-        }
-
         Debug.Log("[Mercenary] 최초 생성 진행");
-
+ 
         for (int i = 1; i <= 10; i++)
         {
             Param param = new Param();
             param.Add("characterId", i);
-            param.Add("level", 1);
-            param.Add("grade", 0);
-            param.Add("shardCount", 0);
-
+            param.Add("level",       1);
+            param.Add("grade",       0);
+            param.Add("shardCount",  0);
+ 
             var insertBro = Backend.GameData.Insert(TableName, param);
-
+ 
             if (!insertBro.IsSuccess())
             {
-                Debug.LogError($"[Mercenary] 생성 실패 (characterId: {i})");
-                return;
+                // 수정 2 : return 대신 false 반환으로 실패를 상위에 전파합니다.
+                //          이전 코드는 void 였기 때문에 부분 생성 후 조용히 종료됐습니다.
+                Debug.LogError($"[Mercenary] 생성 실패 (characterId: {i}): {insertBro}");
+                return false;
             }
         }
+ 
+        Debug.Log("[Mercenary] 최초 생성 완료");
+        return true;
     }
 
     #endregion

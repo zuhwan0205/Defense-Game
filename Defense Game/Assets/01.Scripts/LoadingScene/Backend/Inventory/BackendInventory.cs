@@ -8,45 +8,49 @@ public class BackendInventory : MonoBehaviour
     private const string TableName = "inventory";
 
     public List<InventoryItemData> Items { get; private set; } = new List<InventoryItemData>();
+    
+    public JsonData FetchRows()
+    {
+        var bro = Backend.GameData.GetMyData(TableName, new Where());
+ 
+        if (!bro.IsSuccess())
+        {
+            Debug.LogError($"[Inventory] rows 조회 실패: {bro}");
+            return null;
+        }
+ 
+        return bro.GetReturnValuetoJSON()["rows"];
+    }
 
     #region Load
 
-    public bool LoadInventory()
+    public bool LoadInventory(JsonData rows)
     {
         Debug.Log("[Inventory] 로드 시작");
-
-        var bro = Backend.GameData.GetMyData(TableName, new Where());
-
-        if (!bro.IsSuccess())
-        {
-            Debug.LogError($"[Inventory] 로드 실패: {bro}");
-            return false;
-        }
-
+ 
         try
         {
-            JsonData rows = bro.GetReturnValuetoJSON()["rows"];
             Items.Clear();
-
+ 
             for (int i = 0; i < rows.Count; i++)
             {
                 var row = rows[i];
-
+ 
                 InventoryItemData item = new InventoryItemData
                 {
-                    inDate = row["inDate"]["S"].ToString(),
-                    itemId = int.Parse(row["itemId"]["N"].ToString()),
-                    grade  = row.Keys.Contains("grade") 
-                            ? int.Parse(row["grade"]["N"].ToString()) 
-                            : 0,
-                    shardCount = row.Keys.Contains("shardCount") 
-                            ? int.Parse(row["shardCount"]["N"].ToString()) 
-                            : 0
+                    inDate     = row["inDate"]["S"].ToString(),
+                    itemId     = int.Parse(row["itemId"]["N"].ToString()),
+                    grade      = row.Keys.Contains("grade")
+                        ? int.Parse(row["grade"]["N"].ToString())
+                        : 0,
+                    shardCount = row.Keys.Contains("shardCount")
+                        ? int.Parse(row["shardCount"]["N"].ToString())
+                        : 0
                 };
-
+ 
                 Items.Add(item);
             }
-
+ 
             Debug.Log($"[Inventory] 로드 완료: {Items.Count}개");
             return true;
         }
@@ -61,41 +65,28 @@ public class BackendInventory : MonoBehaviour
 
     #region Init (최초 1회 생성)
 
-    public void InitializeInventoryIfNeeded()
+    public bool InitializeInventory()
     {
-        var bro = Backend.GameData.GetMyData(TableName, new Where());
-
-        if (!bro.IsSuccess())
-        {
-            Debug.LogError("[Inventory] 존재 여부 확인 실패");
-            return;
-        }
-
-        JsonData rows = bro.GetReturnValuetoJSON()["rows"];
-
-        if (rows.Count > 0)
-        {
-            Debug.Log("[Inventory] 이미 존재 → 생성 스킵");
-            return;
-        }
-
         Debug.Log("[Inventory] 최초 생성 진행");
-
+ 
         for (int i = 1; i <= 10; i++)
         {
             Param param = new Param();
-            param.Add("itemId", i);
-            param.Add("grade", 0);
+            param.Add("itemId",     i);
+            param.Add("grade",      0);
             param.Add("shardCount", 0);
-
+ 
             var insertBro = Backend.GameData.Insert(TableName, param);
-
+ 
             if (!insertBro.IsSuccess())
             {
-                Debug.LogError($"[Inventory] 생성 실패 (itemId: {i})");
-                return;
+                Debug.LogError($"[Inventory] 생성 실패 (itemId: {i}): {insertBro}");
+                return false;
             }
         }
+ 
+        Debug.Log("[Inventory] 최초 생성 완료");
+        return true;
     }
 
     #endregion
